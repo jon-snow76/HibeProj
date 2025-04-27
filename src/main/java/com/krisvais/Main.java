@@ -12,9 +12,9 @@ public class Main {
 
         Student s1 = new Student();
         System.out.println(s1);
-        s1.setSname("Avni");
-        s1.setRollno(113);
-        s1.setSage(31);
+        s1.setSname("krishna");
+        s1.setRollno(123);
+        s1.setSage(103);
 
 
         Configuration cfg = new Configuration();
@@ -35,13 +35,17 @@ public class Main {
 //        session.persist(s1);
 //        transaction.commit();
 //        session.close();
-        Student s2 = null;
-        //Fetching  data from Postgres
-        s2 = session.get(Student.class, 103);
+//        Student s2 = null;
+/*
+* we can use merge to either update/ insert rows/cols */
+
+        Transaction transaction = session.beginTransaction();
+        session.merge(s1);
+        transaction.commit();
         sf.close();
 
 
-        System.out.println(s2);
+        System.out.println(s1);
 
         }
     }
