@@ -38,9 +38,9 @@ public class Main {
 //        Student s2 = null;
 /*
 * we can use merge to either update/ insert rows/cols */
-
+        s1= session.get(Student.class,101);
         Transaction transaction = session.beginTransaction();
-        session.merge(s1);
+        session.remove(s1);
         transaction.commit();
         sf.close();
 
