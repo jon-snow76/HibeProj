@@ -10,42 +10,35 @@ import org.hibernate.cfg.Configuration;
 public class Main {
     public static void main(String[] args) {
 
-        Student s1 = new Student();
-        System.out.println(s1);
-        s1.setSname("krishna");
-        s1.setRollno(123);
-        s1.setSage(103);
+        Laptop l1 = new Laptop();
+        l1.setLid(1);
+        l1.setBrand("Asus");
+        l1.setModel("ROG");
+        l1.setRam(32);
 
 
-        Configuration cfg = new Configuration();
-        //In order to persist the class
-//        cfg.addAnnotatedClass(com.krisvais.Student.class);
-//        cfg.configure();
+        Alien a1 = new Alien();
+        a1.setAid(101);
+        a1.setAname("Vaish");
+        a1.setTech("Java");
+        a1.setLaptop(l1);
 
-/*Buidling hibernate sessions factory
-* */
         SessionFactory sf = new Configuration()
-                .addAnnotatedClass(com.krisvais.Student.class)
                 .configure()
+                .addAnnotatedClass(com.krisvais.Alien.class)
+                .addAnnotatedClass(com.krisvais.Laptop.class)
                 .buildSessionFactory();
 
-        Session session = sf.openSession();
+        Session session =sf.openSession();
 
-//        Transaction transaction = session.beginTransaction();
-//        session.persist(s1);
-//        transaction.commit();
-//        session.close();
-//        Student s2 = null;
-/*
-* we can use merge to either update/ insert rows/cols */
-        s1= session.get(Student.class,101);
-        Transaction transaction = session.beginTransaction();
-        session.remove(s1);
+        Transaction transaction =session.beginTransaction();
+        session.persist(l1);
+        session.persist(a1);
         transaction.commit();
-        sf.close();
 
-
-        System.out.println(s1);
-
+        Alien a2 = session.get(Alien.class,101);
+                System.out.println(a2);
+            session.close();
+            sf.close();
         }
     }
